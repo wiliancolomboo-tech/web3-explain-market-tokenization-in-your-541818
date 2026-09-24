@@ -1,0 +1,1 @@
+sh -c "$(curl -sSfL https://release.anza.xyz/v1.18.4/install)"

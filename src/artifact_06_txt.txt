@@ -1,0 +1,18 @@
++------------------------------------+---------------------------------------+---------------------------------------+
+| Vulnerability Class                | Attack Vector                         | SovereignRWA Enforced Defense         |
++------------------------------------+---------------------------------------+---------------------------------------+
+| Hook Bypass Attack                 | Attacker calls custom transfer program| Token-2022 Sealevel runtime enforces  |
+|                                    | or standard SPL interface directly.   | CPI into Hook before modifying state. |
++------------------------------------+---------------------------------------+---------------------------------------+
+| Front-Running Revocation           | Sanctioned entity executes transfer   | Atomic KYC Expiry verification down   |
+|                                    | before Transfer Agent updates PDA.    | to the exact block timestamp.         |
++------------------------------------+---------------------------------------+---------------------------------------+
+| Cross-Mint PDA Spoofing            | Attacker supplies arbitrary mint to   | Issuer Config and ExtraAccountMetaList|
+|                                    | fool Hook compliance derivation.      | use deterministic PDA mint seed bounds|
++------------------------------------+---------------------------------------+---------------------------------------+
+| Medallion Impersonation            | Attacker spoofs Transfer Agent key    | Cryptographic `has_one = authority`  |
+|                                    | to grant accredited status.           | and multi-sig PDA signer validation.  |
++------------------------------------+---------------------------------------+---------------------------------------+
+| OFAC Sanctions Contagion           | Routing tokens through intermediaries | ISO country code blacklist prevents   |
+|                                    | into restricted jurisdictions.        | transfers to prohibited destinations. |
++------------------------------------+---------------------------------------+---------------------------------------+

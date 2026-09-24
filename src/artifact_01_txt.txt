@@ -1,0 +1,17 @@
++---------------------------------------+
+                      |   US SEC Reg D 506(c) / Reg S Mandate |
+                      +---------------------------------------+
+                                          |
+                      +---------------------------------------+
+                      |    SPL Token-2022 Transfer Hook       |
+                      |  - Zero-Bypass Runtime Validation     |
+                      |  - Atomic KYC/AML & Sanctions Query   |
+                      |  - Dynamic 12-Month Rule 144 Lockup   |
+                      +---------------------------------------+
+                                          |
+       +----------------------------------+----------------------------------+
+       |                                  |                                  |
++--------------+                  +---------------+                  +---------------+
+| Accredited   |                  | Atomic Yield  |                  | Court-Ordered |
+| P2P Transfer |                  | Distribution  |                  | Forced Clawback|
++--------------+                  +---------------+                  +---------------+

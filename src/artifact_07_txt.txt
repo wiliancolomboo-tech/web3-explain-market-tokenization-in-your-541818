@@ -1,37 +1,7 @@
-================================================================================
-TIME     | VISUAL DISPLAY                     | SPOKEN AUDIO NARRATIVE
-================================================================================
-00:00 -  | Split-screen: Traditional Paper   | "In the United States, commercial real estate
-00:20    | Title Registry & DTCC vs. Solana   | and debt markets lock up $25 Trillion in illiquid
-         | Explorer with Token-2022 Mint.     | capital. SEC Regulations D and S mandate strict
-         |                                    | 12-month lockups, accredited investor caps, and
-         |                                    | continuous sanctions compliance. Traditional
-         |                                    | blockchains failed institutional compliance—until
-         |                                    | Solana Token Extensions."
---------------------------------------------------------------------------------
-00:20 -  | Terminal showing `anchor test`     | "This is SovereignRWA. We built an institutional
-00:45    | running. Visual trace of Transfer  | compliance engine directly on Solana Token-2022.
-         | Hook CPI instruction execution.    | Rather than relying on fragile, centralized smart
-         |                                    | contract wrappers, we utilize native Transfer Hooks.
-         |                                    | Every atomic P2P trade triggers an on-chain SEC
-         |                                    | compliance evaluation inside the Sealevel runtime."
---------------------------------------------------------------------------------
-00:45 -  | IDE code walkthrough of            | "Here in our Anchor Transfer Hook, our system
-01:15    | `transfer_hook` logic: KYC expiry, | extracts investor compliance PDAs. Notice how it
-         | ISO Country Code, Rule 144 check.  | verifies Rule 501 accreditation status, checks
-         |                                    | ISO-3166 jurisdiction against OFAC blacklists,
-         |                                    | and mathematically enforces Rule 144 holding
-         |                                    | durations—all in under 42,000 Compute Units."
---------------------------------------------------------------------------------
-01:15 -  | CLI triggering an illegal transfer | "Watch what happens when a sanctioned or unaccredited
-01:40    | to a blacklisted address. Transaction| actor attempts a secondary trade: the Sealevel VM
-         | halts with custom error code       | aborts atomically with `RecipientSanctioned`. And if
-         | `RwaSecurityError::SenderSanctioned`| a U.S. court orders a legal garnishment, our
-         |                                    | audited Permanent Delegate clawback recovers the
-         |                                    | capital without disrupting cap table continuity."
---------------------------------------------------------------------------------
-01:40 -  | Architecture summary graphic;      | "SovereignRWA bridges U.S. capital markets to Solana
-02:00    | GitHub commit tree & production    | with zero regulatory compromise, institutional
-         | audit-readiness dashboard.         | throughput, and deterministic security. This is how
-         |                                    | Wall Street enters Web3. Thank you."
-================================================================================
+client/
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── index.ts
+    ├── notifyService.ts
+    └── complianceCli.ts

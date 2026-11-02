@@ -1,0 +1,7 @@
+{
+  "status": "healthy",
+  "network": "devnet",
+  "connected_slot": 284910291,
+  "queue_backlog": 0,
+  "compliance_rule_engine": "ACTIVE"
+}

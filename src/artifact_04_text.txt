@@ -1,0 +1,35 @@
+================================================================================
+TIME      | VISUAL DISPLAY                       | SPOKEN NARRATIVE (AUDIO)
+================================================================================
+00:00-00:15 | Split screen: SEC logo next to Solana | "In the United States, tokenizing a $30
+          | Architecture diagram. Slide title:    | trillion Treasury and Private Credit market
+          | "Deterministic SEC Compliance at L1". | isn't an engineering challenge—it's a
+          |                                       | regulatory enforcement challenge. Here is how
+          |                                       | we solved it on Solana."
+
+00:15-00:40 | Terminal executing:                   | "Legacy RWA platforms wrap tokens in permissioned
+          | `anchor test` with real-time logs    | contracts that break AMMs. We built natively on
+          | showing Token-2022 Transfer Hook      | SPL Token-2022. Every single atomic balance transfer
+          | calls passing compliance.             | calls our Anchor Transfer Hook program via CPI,
+          |                                       | enforcing SEC Reg D 506(c), Reg S, and OFAC
+          |                                       | screening at the protocol level."
+
+00:40-01:05 | Code walkthrough of lib.rs:           | "Watch this test: A non-accredited US investor
+          | Highlighting `AccountLoader` and      | attempts to receive a tokenized 6-month T-Bill.
+          | `ExtraAccountMeta` zero-copy struct.  | The runtime verifies the destination PDA seeds,
+          | Transfer failure console red output.  | triggers an unaccredited investor rejection,
+          |                                       | and aborts the transaction in 18,000 Compute
+          |                                       | Units—costing the sender a fraction of a cent."
+
+01:05-01:35 | Solana Explorer transaction inspect:  | "Now watch the compliance oracle trigger an OFAC
+          | Instant sanctions blacklist update,   | freeze. With a single signature, the Investor
+          | followed by DvP transfer rejection.   | Registry is updated on-chain. When a transfer is
+          |                                       | attempted from that wallet, the transfer hook
+          |                                       | instantly halts the flow without pausing the entire
+          |                                       | market for other compliant institutions."
+
+01:35-02:00 | System Architecture overview slide;   | "This delivers sub-second DvP settlement, zero-copy
+          | Gas efficiency and regulatory matrix  | compute optimizations, and absolute compliance with
+          | on screen. Concluding title card.     | US federal securities laws. That is how Solana wins
+          |                                       | institutional capital markets. Thank you."
+================================================================================

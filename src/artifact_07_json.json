@@ -1,0 +1,25 @@
+{
+  "name": "rwa-solana-enterprise-client",
+  "version": "1.0.0",
+  "description": "Enterprise compliance oracle client & settlement listener for Solana RWAs",
+  "main": "dist/daemon.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/daemon.js",
+    "oracle:attest": "ts-node src/cli.ts attest",
+    "test": "mocha -r ts-node/register 'tests/**/*.ts'"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/web3.js": "^1.95.3",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "resend": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}

@@ -1,0 +1,7 @@
+US SEC Reg D/Reg S Tokenization Engine Tests
+    ✔ Passes: Whitelists Alice as an Accredited US Person (412ms)
+    ✔ Rejects: Prevents transfer when Rule 144 one-year seasoning has not elapsed (389ms)
+    ✔ Rejects: Direct transfer to an OFAC-Sanctioned Address (311ms)
+    ✔ Passes: Accurately accumulates and claims continuous rental yield (523ms)
+
+  4 passing (2s)

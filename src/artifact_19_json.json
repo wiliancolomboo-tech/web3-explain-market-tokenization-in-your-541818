@@ -1,0 +1,11 @@
+{
+  "status": "HEALTHY",
+  "programId": "SIMTE11111111111111111111111111111111111111",
+  "cluster": "solana-devnet",
+  "slot": 312891920,
+  "transferHookState": "ONLINE",
+  "enterpriseAlerts": {
+    "resendApi": "CONNECTED",
+    "slackWebhook": "ACTIVE"
+  }
+}

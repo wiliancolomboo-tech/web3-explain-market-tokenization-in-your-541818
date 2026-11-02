@@ -1,0 +1,5 @@
+---
+
+## 6.3 Telemetry & Healthcheck Endpoint Implementation
+
+Add this lightweight HTTP server inside `src/index.ts` to power Kubernetes and Docker Compose health probes:

@@ -1,0 +1,38 @@
+flowchart TD
+    subgraph US_Regulatory_Boundary ["US Regulatory & Ingestion Pipeline"]
+        RegA["Accredited Investor Verification (SEC Rule 506(c))"]
+        Sanctions["OFAC / FinCEN Real-Time Sanctions Screening"]
+        OracleService["Institutional Identity Provider (IDV Gateway)"]
+        RegA --> OracleService
+        Sanctions --> OracleService
+    end
+
+    subgraph OffChain_Enterprise_Core ["Enterprise Automation Daemon (Node.js/TypeScript Engine)"]
+        Orchestrator["SITS Enterprise Client Worker"]
+        ResendAPI["Resend Enterprise Email Dispatcher"]
+        SlackHook["Securities Compliance Slack/Discord Webhook"]
+        OracleService -->|Attested Identity| Orchestrator
+        Orchestrator -->|Dispatch Compliance Alert| ResendAPI
+        Orchestrator -->|Audit Trail Webhook| SlackHook
+    end
+
+    subgraph Solana_Runtime ["Solana Token-2022 Consensus Layer"]
+        subgraph Program_Accounts ["Anchor Compliance Program (Transfer Hook)"]
+            ConfigAccount["Program Registry Config (PDA)"]
+            InvestorRegistry["Investor Identity State (PDA: [mint, wallet])"]
+            AuditLog["Compliance Audit Event (Log Buffer)"]
+        end
+
+        subgraph Mint_Infrastructure ["RWA Token-2022 Mint Account"]
+            Mint["US Treasury / Credit Mint\nExtensions: Transfer Hook, Permanent Delegate"]
+            HolderA["Investor A Token Account\n(Default Account State: Frozen)"]
+            HolderB["Investor B Token Account\n(Default Account State: Frozen)"]
+        end
+
+        Orchestrator -->|1. Register/Refresh Identity| InvestorRegistry
+        HolderA -.->|2. Request Transfer SPL Tokens| HolderB
+        HolderA ==>|3. CPI Invoke spl_transfer_hook| Program_Accounts
+        Program_Accounts -->|4. Validate Sender/Receiver KYC & Reg S Lock| InvestorRegistry
+        Program_Accounts -->|5. Assertion Approved| Mint
+        Mint -->|6. Execute Atomic Debit/Credit| HolderB
+    end

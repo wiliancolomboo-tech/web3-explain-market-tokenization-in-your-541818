@@ -1,0 +1,10 @@
+// GET /healthz
+{
+  "status": "HEALTHY",
+  "uptime_seconds": 86420,
+  "cluster": "devnet",
+  "program_id": "RWA1111111111111111111111111111111111111111",
+  "monitored_mint": "M1NT111111111111111111111111111111111111111",
+  "solana_rpc_latency_ms": 32,
+  "circuit_breaker": "ACTIVE"
+}

@@ -1,0 +1,6 @@
+Standard ERC-20 wrappers fail SEC compliance. With Solana Token Extensions, compliance is native:
+🔹 Transfer Hook interface enforces SEC Reg D 506(c) & Reg S holding periods atomically on-chain.
+🔹 OFAC sanctions screening prior to state mutation.
+🔹 Zero-gas overhead with sub-second (~400ms) finality.
+
+Every transfer checks compliance directly inside the runtime! ⚡

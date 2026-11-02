@@ -1,0 +1,5 @@
+1/ Switzerland is the global gold standard for asset tokenization with the Swiss DLT Act (Art. 973d CO), legally unbundling securities from central depositories. 🇨🇭
+
+We built HelvetiaToken: Institutional-grade Swiss Market Tokenization natively on @solana Token-2022! ⚡
+
+Here's how it works: 👇

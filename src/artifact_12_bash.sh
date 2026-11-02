@@ -1,18 +1,38 @@
-# Step 1: Clone and install dependencies
-git clone https://github.com/sovereign-rwa/solana-market-tokenization.git
-cd solana-market-tokenization
-yarn install
+# ==============================================================================
+# 1. BUILD & DEPLOY ON-CHAIN PROGRAM (Solana Devnet / Testnet / Mainnet)
+# ==============================================================================
 
-# Step 2: Build the Anchor program to generate keypairs and IDL
+# Build deterministic Anchor binary
 anchor build
 
-# Step 3: Synchronize Program IDs
-# Verify that the declare_id! matches your compiled program keypair:
-solana address -k target/deploy/sovereign_rwa-keypair.json
-anchor keys sync
+# Deploy to Solana Devnet
+solana program deploy \
+  --program-id target/deploy/rwa_market_tokenization-keypair.json \
+  target/deploy/rwa_market_tokenization.so \
+  --url devnet
 
-# Step 4: Configure local validator with Token-2022 support
-solana config set --url localhost
+# ==============================================================================
+# 2. RUN TEST SUITE & GENERATE VERIFICATION PROOFS
+# ==============================================================================
 
-# Step 5: Run the complete test suite against localnet
 anchor test
+
+# ==============================================================================
+# 3. INITIALIZE CLI & DISPATCH INVESTOR ACCREDITATION
+# ==============================================================================
+
+# Export enterprise credentials
+export RESEND_API_KEY="re_live_enterprise_secret_token"
+export SOLANA_RPC_URL="https://api.devnet.solana.com"
+
+# Register an Accredited US Institutional Investor and dispatch confirmation email
+npm run cli -- certify \
+  -k /path/to/compliance-admin-keypair.json \
+  -i 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM \
+  -e "institutional-desk@blackrock-simulated.com" \
+  --country 840 \
+  --type 2 \
+  --days 365
+
+# Launch headless daemon to stream trades & auto-email trade confirmations
+docker-compose up -d --build

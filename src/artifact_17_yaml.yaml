@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  aegis-compliance-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegis_compliance_oracle
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - COMPLIANCE_PROGRAM_ID=Aegis7Xz2m4r1hP99N3pQY9wVkY6nU1C4V5mKbZ8qL2r
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

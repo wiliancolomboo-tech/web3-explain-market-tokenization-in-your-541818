@@ -1,0 +1,17 @@
+1/3 🇺🇸 Why the future of US Capital Markets is being built on @solana Token-2022:
+Tokenizing $27T in US Treasuries & Real-World Assets requires more than hype—it demands ironclad adherence to SEC Reg D, Rule 144 locks, and OFAC sanctions. 
+
+Here is how we solved institutional compliance at 400ms speed 🧵👇
+
+2/3 ⚡ Legacy blockchains fail US securities compliance because checks happen out-of-band or via gas-heavy wrappers. 
+With Solana Token-2022 Transfer Hooks, our open-source STCE engine validates Accredited Investor KYC, holding lockups, and FINRA reporting synchronously on-chain.
+
+No compliance leaks. Zero extra gas burden.
+
+3/3 🏛️ Enterprise-ready today:
+- Programmatic SEC Rule 144 lockup release
+- 100% deterministic transfer hooks
+- Native @resend dispatch for SEC Rule 10b-10 electronic delivery confirmations
+- Turnkey Docker + Anchor repo
+
+Check out our 1st-place submission & code: https://github.com/solana-foundation/market-tokenization-us #Solana #RWA #DeFi

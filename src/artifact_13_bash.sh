@@ -1,8 +1,8 @@
-# Airdrop testnet SOL
-solana airdrop 2 -u devnet
+# Build verifiable BPF bytecode
+anchor build
 
-# Deploy to Devnet
-anchor deploy --provider.cluster devnet
-
-# Verify deployment logs and inspect program accounts
-solana program show <PROGRAM_ID> -u devnet
+# Deploy program to cluster
+solana program deploy \
+  --program-id target/deploy/rwa_compliance_engine-keypair.json \
+  target/deploy/rwa_compliance_engine.so \
+  --url https://api.devnet.solana.com

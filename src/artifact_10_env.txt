@@ -1,0 +1,17 @@
+# Solana RPC Endpoint (Devnet/Mainnet-Beta/Helius/Triton)
+SOLANA_RPC_URL=https://api.devnet.solana.com
+
+# Deployed Anchor Program ID
+PROGRAM_ID=RWA1111111111111111111111111111111111111111
+
+# Authority Keypair array for automated signing of accredited registrations
+COMPLIANCE_AUTHORITY_KEYPAIR=[1,2,3...255]
+
+# Resend API Key for institutional email notifications
+RESEND_API_KEY=re_enterprise_live_key_998877
+
+# Slack Webhook for operational compliance notifications
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+
+# Designated Compliance Audit Mailbox
+COMPLIANCE_OFFICER_EMAIL=counsel@institutional-rwa.us

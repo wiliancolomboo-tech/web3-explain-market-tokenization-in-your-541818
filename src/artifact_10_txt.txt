@@ -1,0 +1,5 @@
+Private markets in the United States hold over $13 Trillion in commercial real estate and credit, but settlement is locked in 1970s T+2 paperwork and manual Cap Table spreadsheets. 
+
+We brought U.S. Market Tokenization to @Solana using Token-2022 Transfer Hooks. 
+
+Here is how code replaces brokers: 🧵👇

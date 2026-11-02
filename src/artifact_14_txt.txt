@@ -1,0 +1,7 @@
+Every token transfer streams real-time compliance receipts:
+⚡ Instant SEC compliance logs dispatched to Slack SecOps
+📬 Investor Form D documentation via @resend
+
+The future of compliant US market tokenization is built on Solana.
+
+Check out the full open-source repo & turnkey architecture: https://github.com/sponsor-org/rwa-solana-tokenization 🚀

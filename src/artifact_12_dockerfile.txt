@@ -1,0 +1,18 @@
+# Multi-stage production container for Merlion Compliance Engine
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package.json yarn.lock tsconfig.json ./
+RUN yarn install --frozen-lockfile
+COPY src/ ./src
+RUN yarn build || true
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package.json yarn.lock ./
+RUN yarn install --production --frozen-lockfile
+COPY --from=builder /app/src ./src
+COPY tsconfig.json ./
+
+EXPOSE 8080
+CMD ["node", "-r", "ts-node/register", "src/daemon.ts"]

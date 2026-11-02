@@ -1,0 +1,23 @@
+FROM node:20-slim AS builder
+
+WORKDIR /usr/src/app
+
+COPY client/package*.json ./
+RUN npm ci
+
+COPY client/ ./
+RUN npm run build || true
+
+FROM node:20-slim AS runner
+WORKDIR /usr/src/app
+
+ENV NODE_ENV=production
+COPY --from=builder /usr/src/app ./
+
+USER node
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:8080/health', (r) => {if (r.statusCode !== 200) process.exit(1);});"
+
+CMD ["node", "index.js"]

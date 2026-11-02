@@ -1,4 +1,7 @@
-Standard CU Limit: 200,000
-SovereignRWA Hook: 41,360 CU (Consumes only 20.6% of standard limit!)
----------------------------------------------------------------------------------
-[===>-----------------------------------------------------------------------]
+---
+
+# 5. Comprehensive Test Suite & QA Matrix
+
+This Mocha/Chai test suite tests the Transfer Hook program, deterministic PDA state derivation, accredited investor checks, Rule 144 holding period locks, and OFAC sanctions rejection.
+
+### `tests/market_tokenization.ts`

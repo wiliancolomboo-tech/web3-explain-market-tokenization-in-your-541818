@@ -1,0 +1,35 @@
+[Institutional Primary Market]
+       │
+       ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Solana Mainnet-Beta / Devnet                    │
+│                                                                        │
+│  ┌────────────────────────┐         ┌──────────────────────────────┐  │
+│  │ Compliance Registry    │         │ Token-2022 Asset Mint        │  │
+│  │ Program (Identity PDAs)│         │ (Transfer Hook Extension)    │  │
+│  └───────────┬────────────┘         └──────────────┬───────────────┘  │
+│              │                                     │                  │
+│              ▼                                     ▼                  │
+│  ┌─────────────────────────────────────────────────────────────────┐  │
+│  │           Transfer Hook Compliance Validation Program           │  │
+│  │   - Checks sender & recipient KYC/AML status                    │  │
+│  │   - Asserts Rule 144 holding periods                            │  │
+│  │   - Asserts max investor caps (Securities Exchange Act 12(g))   │  │
+│  └─────────────────────────────────┬───────────────────────────────┘  │
+└────────────────────────────────────┼───────────────────────────────────┘
+                                     │
+                     Account Mutations & Anchor Logs
+                                     │
+                                     ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│               Enterprise Daemon & Automation Service Worker            │
+│  ┌───────────────────────┐                  ┌──────────────────────┐  │
+│  │ Solana RPC Geyser WS  │                  │ Rule Engine & Alert  │  │
+│  └───────────┬───────────┘                  └──────────┬───────────┘  │
+└──────────────┼─────────────────────────────────────────┼──────────────┘
+               │                                         │
+               ▼                                         ▼
+┌─────────────────────────────┐           ┌─────────────────────────────┐
+│  Resend Transaction Engine  │           │   Enterprise Audit Webhook  │
+│ (Investor DvP Receipts)     │           │  (Slack / Discord SecOps)   │
+└─────────────────────────────┘           └─────────────────────────────┘

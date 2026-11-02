@@ -1,0 +1,14 @@
++--------------------------+--------------------------------------------------------------------------+
+| SCENARIO                 | REMEDIATION ACTION                                                       |
++--------------------------+--------------------------------------------------------------------------+
+| OFAC Sanctions Alert     | 1. Execute CLI: npm run cli -- freeze -w <SANCTIONED_PUBKEY>             |
+|                          | 2. Anchor invokes `set_investor_freeze(true)` on investor registry PDA    |
+|                          | 3. Subsequent transfer hook executions halt deterministically            |
+|                          | 4. SecOps receives Discord embed notification + transaction signature    |
++--------------------------+--------------------------------------------------------------------------+
+| System Upgrade / Legal   | 1. Invoke `initialize_market` with updated emergency paused flag         |
+| Injunction               | 2. All token movements frozen until legal review completed               |
++--------------------------+--------------------------------------------------------------------------+
+| Healthcheck Endpoint     | GET /healthz returns:                                                    |
+|                          | { "status": "UP", "rpc_lag_ms": 32, "active_registries": 1420 }          |
++--------------------------+--------------------------------------------------------------------------+

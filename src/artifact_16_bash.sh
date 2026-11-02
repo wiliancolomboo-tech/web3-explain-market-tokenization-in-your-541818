@@ -1,0 +1,1 @@
+yarn cli issue-passport --mint <MINT_ADDRESS> --wallet <INVESTOR_ADDRESS> --lockup-days 0

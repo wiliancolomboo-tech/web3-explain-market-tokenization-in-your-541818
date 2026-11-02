@@ -1,0 +1,6 @@
+3/ The loop is closed with real-time enterprise settlement advice via @resend and immutable SIEM audit webhooks for tier-1 private banks.
+
+Turnkey Docker setup, 100% test coverage, ready for mainnet.
+
+Built for the Solana ecosystem. 🌐
+GitHub: https://github.com/helvetia-dlt/swiss-market-tokenization

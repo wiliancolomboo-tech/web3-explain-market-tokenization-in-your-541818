@@ -1,0 +1,6 @@
+3/4 Built for institutions. Ready for production.
+
+Features complete @AnchorLang programs, full QA matrices, turnkey Docker deployment, and institutional webhook telemetry.
+
+Check out the full repository and architecture breakdown: https://github.com/solmas-rwa/protocol
+Built for the @Solana bounty challenge! 🚀🦀

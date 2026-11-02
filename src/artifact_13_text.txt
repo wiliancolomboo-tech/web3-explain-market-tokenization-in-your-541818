@@ -1,0 +1,6 @@
+2/4 Traditional private assets require manual broker-dealer checks and T+2 settlement.
+
+With SolMAS-RWA:
+✅ Deterministic KYC/AML & Accreditation checks at the protocol layer
+✅ SPL Token-2022 Transfer Hook enforcement (Instant revert on non-AI/sanctioned wallets)
+✅ Automated Resend & Slack enterprise auditing

@@ -1,0 +1,7 @@
+2/4 We built an institutional RWA tokenization engine on @solana using Token-2022 Transfer Hooks.
+
+Every single trade validates:
+✅ Annual 506(c) accredited identity attestation
+🔒 12-month Rule 144 holding lockups
+👥 Exchange Act 2,000-investor cap
+🚨 FinCEN OFAC sanctions lists

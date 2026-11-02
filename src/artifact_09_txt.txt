@@ -1,0 +1,2 @@
+### Telemetry & Healthcheck Endpoint Implementation
+Add to the client entrypoint to support zero-downtime orchestration:

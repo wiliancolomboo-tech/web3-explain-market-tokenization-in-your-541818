@@ -1,0 +1,5 @@
+Complete, production-ready Anchor smart contract, TypeScript CLI orchestrator with @resend notifications, and turnkey Docker setup are live.
+
+Real World Assets don’t need off-chain trust—they need mathematical certainty on Solana.
+
+Built for the Solana Bounty ecosystem. Check the open-source repo now! 🌐🚀 #Solana #RWA #Token2022

@@ -1,0 +1,8 @@
+US Capital Market Tokenization Engine (Reg D / Reg S)
+    ✔ 1. Successfully initializes the US Reg D/S Market Asset Pool (482ms)
+    ✔ 2. Attests US Accredited Investor Identity via Oracle (395ms)
+    ✔ 3. Mints fractional security tokens to accredited investor (412ms)
+    ✔ 4. Blocks secondary transfer when Rule 144 holding lockup is active (280ms)
+    ✔ 5. Allows secondary transfer after Rule 144 holding lockup elapses (6120ms)
+
+  5 passing (8s)

@@ -1,0 +1,1 @@
+anchor deploy --program-name solrwa_compliance

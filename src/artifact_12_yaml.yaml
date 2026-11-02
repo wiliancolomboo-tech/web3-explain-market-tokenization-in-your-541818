@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  rwa-compliance-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rwa-compliance-daemon
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - PROGRAM_ID=RWA1111111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ENTERPRISE_WEBHOOK_URL=${ENTERPRISE_WEBHOOK_URL}
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

@@ -1,0 +1,5 @@
+1/4 How does institutional asset tokenization actually work under real-world financial regulation? 
+
+In Singapore, MAS Project Guardian established the standard for regulated RWA. 
+
+Today we're open-sourcing SolMAS-RWA: Institutional asset tokenization powered by @Solana Token-2022 transfer hooks! 🇸🇬⚡️🧵👇

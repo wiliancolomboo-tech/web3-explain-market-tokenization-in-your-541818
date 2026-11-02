@@ -1,0 +1,9 @@
+{
+  "status": "UP",
+  "program_id": "TokenJuris111111111111111111111111111111111",
+  "solana_cluster": "devnet",
+  "websocket_connected": true,
+  "resend_gateway": "ONLINE",
+  "slack_webhook": "CONFIGURED",
+  "block_height": 289412091
+}

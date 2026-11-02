@@ -1,0 +1,10 @@
+GET /healthz
+200 OK
+{
+  "status": "UP",
+  "programId": "RWA1111111111111111111111111111111111111111",
+  "cluster": "http://solana-test-validator:8899",
+  "syncedSlot": 1420593,
+  "transferHookVersion": "spl-transfer-hook-interface-0.6.3",
+  "secRegRule": "506(c)"
+}

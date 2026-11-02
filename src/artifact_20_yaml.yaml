@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  rwa-orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sovereign-rwa-service
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - PROGRAM_ID=RWA1111111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - COMPLIANCE_ADMIN_EMAIL=compliance-officer@sovereign-rwa.internal
+    ports:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

@@ -1,17 +1,11 @@
-+---------------------------------------+
-                      |   US SEC Reg D 506(c) / Reg S Mandate |
-                      +---------------------------------------+
-                                          |
-                      +---------------------------------------+
-                      |    SPL Token-2022 Transfer Hook       |
-                      |  - Zero-Bypass Runtime Validation     |
-                      |  - Atomic KYC/AML & Sanctions Query   |
-                      |  - Dynamic 12-Month Rule 144 Lockup   |
-                      +---------------------------------------+
-                                          |
-       +----------------------------------+----------------------------------+
-       |                                  |                                  |
-+--------------+                  +---------------+                  +---------------+
-| Accredited   |                  | Atomic Yield  |                  | Court-Ordered |
-| P2P Transfer |                  | Distribution  |                  | Forced Clawback|
-+--------------+                  +---------------+                  +---------------+
++----------------------------------------------------------------------------------------------------+
+|                                    VALUE PROPOSITION MATRIX                                        |
++--------------------------+------------------------------------+------------------------------------+
+| Dimension                | Traditional US Private Markets     | Solana Token-2022 RWA Engine       |
++--------------------------+------------------------------------+------------------------------------+
+| Settlement Latency       | T+30 to T+90 Days                  | Sub-Second (<400ms Finality)       |
+| Compliance Verification  | Manual PDF Review, Legal Counsel   | On-Chain Token Extension Hooks     |
+| Cap Table Reconciliation | Bi-Weekly/Quarterly Spreadsheets   | Atomic On-Chain State Truth        |
+| Secondary Liquidity Cost | 5-10% Broker Fees + 20% Discount   | Automated Market Protocol (0.30%)  |
+| Transaction Cost         | $500 - $2,500 per Transfer Wire    | <$0.001 Network Gas Fee            |
++--------------------------+------------------------------------+------------------------------------+

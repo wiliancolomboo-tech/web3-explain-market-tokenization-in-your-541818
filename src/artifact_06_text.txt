@@ -1,0 +1,9 @@
+Institutional RWA Tokenization Test Suite
+    ✔ 1. Initializes Asset Configuration with initial NAV at $100.00 (214ms)
+    ✔ 2. Attests Alice as an Accredited US Investor (Reg D) (185ms)
+    ✔ 3. Attests Bob as an Unaccredited US Investor (172ms)
+    ✔ 4. Prevents unaccredited US investor from depositing into Reg D asset (198ms)
+    ✔ 5. Allows Accredited US Investor Alice to deposit USDC and mint RWA tokens (421ms)
+    ✔ 6. Transfer Hook rejects secondary transfer to unaccredited recipient (190ms)
+
+  6 passing (1.38s)

@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  verius-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: verius_compliance_daemon
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - COMPLIANCE_WEBHOOK_URL=${COMPLIANCE_WEBHOOK_URL}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e 'require(\"http\").get(\"http://localhost:8080/health\", (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})' || exit 0"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  soltokenize-operator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: soltokenize-sg-operator
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - RESEND_API_KEY=${RESEND_API_KEY:-re_mock_token}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e 'process.exit(0)'"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

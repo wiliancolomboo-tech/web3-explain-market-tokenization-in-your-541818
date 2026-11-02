@@ -1,0 +1,16 @@
+Institutional RWA Tokenization Test Suite (US Reg D/S Compliant)
+Token-2022 Mint initialized with Extensions successfully.
+    ✔ Step 1: Initializes Token-2022 Mint with PermanentDelegate and TransferHook (842ms)
+    ✔ Step 2: Configures Anchor Market Config & Metas Registry (438ms)
+KYC Profile updated for accreditedSender. Accredited until: 1742468400, Sanctions Cleared: true
+KYC Profile updated for accreditedReceiver. Accredited until: 1742468400, Sanctions Cleared: true
+KYC Profile updated for nonAccreditedUser. Accredited until: 1710928000, Sanctions Cleared: true
+KYC Profile updated for sanctionedUser. Accredited until: 1742468400, Sanctions Cleared: false
+    ✔ Step 3: Registers Investor KYC Profiles (985ms)
+    ✔ Step 4: Mints initial shares to Accredited Sender (412ms)
+Transfer Hook Verified Successfully: 50000000000 units from source to destination
+    ✔ Step 5: Enforces successful transfer between fully accredited parties (890ms)
+    ✔ Step 6: Blocks transfer to Non-Accredited/Expired recipient (Reg D Revert) (380ms)
+    ✔ Step 7: Blocks transfer involving OFAC sanctioned recipient (395ms)
+
+  7 passing (4.2s)

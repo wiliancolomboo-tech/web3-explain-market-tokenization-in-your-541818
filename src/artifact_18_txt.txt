@@ -1,0 +1,3 @@
+2/ By combining Solana Token-2022 Transfer Hooks with an on-chain @AnchorLang compliance engine, HelvetiaToken deterministically enforces FINMA AMLO KYC passports & Swiss statutory transfer restrictions (Vinkulierung) directly on L1.
+
+No custodial wrappers. Sub-second DvP settlement. 🛡️

@@ -1,0 +1,6 @@
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=TokenRWA111111111111111111111111111111111111
+MINT_ADDRESS=2b1kV6DkPAnxd5ixfnxCpjhmKqUhLoPueE9wA4D6eH5V
+RESEND_API_KEY=re_123456789_enterprise_prod
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+SENDER_EMAIL=settlement@rwa-institutional.com

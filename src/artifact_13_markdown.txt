@@ -1,0 +1,18 @@
+1/ Tokenizing Real World Assets (RWAs) in the United States isn't a liquidity issue—it's a regulatory enforcement issue.
+
+SEC Rule 144 holding lockups, Reg D 506(c) accreditation checks, and OFAC sanctions can't live in static spreadsheets.
+
+We built the institutional bridge on @solana. 🧵👇
+
+2/ Built on Solana Token-2022, our architecture leverages native Transfer Hooks:
+⚡️ Every transfer runs through our on-chain compliance validator in <400ms
+🔒 Automated 1-year Rule 144 lockup enforcement via Sysvar Clock
+🛡 Real-time OFAC & KYC/AML screening via dynamic PDAs
+
+3/ Institutional compliance meets composability:
+Integrated with enterprise notification pipelines (@resend for certified settlement receipts & Slack for compliance audits).
+
+Explore the open-source Anchor engine & runbook:
+https://github.com/enterprise-rwa-solana/us-tokenization-engine
+
+#Solana #RWA #Token2022 #DeFi #InstitutionalCrypto

@@ -1,0 +1,20 @@
+🧵 1/3
+The US private placement market issues over $4.5 TRILLION annually under SEC Reg D & Reg S—yet cap tables remain trapped in spreadsheets and 10-day settlement windows.
+
+We built the Solana Regulatory Asset Transfer Framework (SRAT-2022) to bring institutional RWA compliance natively on-chain. ⚡️🇺🇸
+
+🧵 2/3
+Powered by @Solana Token-2022 Transfer Hooks:
+🔒 Ex-ante SEC Rule 506(c) accredited investor verification
+⏱️ Programmatic Rule 144 holding lock enforcement
+🛡️ OFAC blacklist screening & court-ordered clawbacks
+📧 Real-time audited cap-table ledger sync via @resend & Slack
+
+Zero-downtime. Sub-second finality. Sub-cent fees.
+
+🧵 3/3
+The future of institutional capital markets isn't private walled gardens—it's high-throughput, legally compliant public infrastructure.
+
+Explore the complete Anchor smart contract, CLI orchestrator, and test suite on GitHub: [https://github.com/your-org/solana-rwa-tokenization]
+
+#Solana #RWA #Token2022 #DeFi #Fintech

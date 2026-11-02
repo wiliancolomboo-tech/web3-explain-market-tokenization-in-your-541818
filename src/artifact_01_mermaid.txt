@@ -1,0 +1,46 @@
+flowchart TD
+    subgraph External_Regulated_Entities["Off-Chain Regulated Rails (Singapore Jurisdiction)"]
+        Investor["Accredited Investor (AI) / FI"]
+        MAS["MAS / Compliance Gateway (SingPass / MyInfo Business)"]
+        Custodian["Regulated Trustee / Custodian (DBS / SGX CDP)"]
+        NAV_Oracle["Dynamic NAV Engine / Asset Valuer"]
+    end
+
+    subgraph SolTokenize_Orchestrator["Enterprise Orchestration Engine (Node.js/TypeScript Engine)"]
+        API_GW["FastAPI / Express Automation Gateway"]
+        Webhook_Dispatcher["Multi-Channel Event Dispatcher (Resend & Slack)"]
+        Worker["Autonomous Crank Worker / Relayer Keypair"]
+    end
+
+    subgraph Solana_Runtime["Solana High-Performance Core (Token-2022 Runtime)"]
+        Program["SolTokenize Anchor Core Program"]
+        TransferHook["Transfer Hook Compliance Validator"]
+        Whitelists["Registry PDA (KYC/AML & Jurisdictional Sanctions)"]
+        RWA_Mint["Token-2022 RWA Security Mint"]
+        Investor_ATA["Investor Token Account (Default Frozen)"]
+    end
+
+    subgraph Enterprise_Monitoring["Auditing & Operations Center"]
+        Resend["Resend Notification Engine (Email Reports)"]
+        Slack["Slack Compliance & Security Webhook"]
+    end
+
+    %% Workflows
+    Investor -->|"1. SingPass KYC/Accreditation"| MAS
+    MAS -->|"2. Attestation Vector"| API_GW
+    API_GW -->|"3. Issue Registry Whitelist Tx"| Worker
+    Worker -->|"4. Execute register_investor()"| Program
+    Program -->|"5. Update Whitelist Status"| Whitelists
+
+    NAV_Oracle -->|"6. Publish Audited NAV"| API_GW
+    API_GW -->|"7. update_nav()"| Program
+
+    Investor -->|"8. Trigger DvP Asset Transfer"| Investor_ATA
+    Investor_ATA -->|"9. CPI Hook Trigger"| TransferHook
+    TransferHook -->|"10. Verify Whitelist & Sanction State"| Whitelists
+    TransferHook --"[ALLOW: State Validated]"--> Investor_ATA
+
+    Program -->|"11. Emit On-Chain Security Event"| Worker
+    Worker -->|"12. Ingest Logs"| Webhook_Dispatcher
+    Webhook_Dispatcher -->|"13. Real-Time Security Alert"| Slack
+    Webhook_Dispatcher -->|"14. Dispatch Settlement Slip"| Resend

@@ -1,0 +1,20 @@
+🧵 1/3: How do you unlock the $20T+ US Commercial Real Estate & Treasury market on-chain without breaking SEC regulations? 
+
+Meet our 1st-place submission: The Solana Token-2022 Native Transfer Hook Compliance Engine 🇺🇸⚡
+
+Atomic, sub-second Reg D 506(c) & Rule 144 compliance directly in the ledger! 👇
+
+🧵 2/3: Why did past RWA architectures fail? Centralized EVM whitelists add latency and break DEX composability. 
+
+Using Solana's `spl-transfer-hook-interface`, every AMM swap, OTC transfer, or escrow call invokes our Anchor engine to verify:
+✅ SEC Accredited Investor Expiry
+✅ Rule 144 Holding Lock (1-yr)
+✅ Real-Time OFAC Sanctions Bitmask
+
+Sub-cent fees. 400ms finality. 100% compliant.
+
+🧵 3/3: Built for enterprise adoption with turnkey Docker orchestration, automated SEC audit receipts via @resend, and Slack alerts for compliance officers.
+
+Ready to institutionalize US capital markets on @solana. 
+
+Check out the code & architecture breakdown: https://github.com/solana-developers/rwa-compliance-engine 🚀

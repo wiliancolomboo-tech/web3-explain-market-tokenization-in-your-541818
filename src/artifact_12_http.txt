@@ -1,0 +1,11 @@
+GET /health
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+
+  {
+    "status": "healthy",
+    "slot_lag": 2,
+    "rpc_connected": true,
+    "resend_service_status": "operational",
+    "jurisdiction": "SG-MAS"
+  }

@@ -1,0 +1,31 @@
+================================================================================
+TIME      | VISUAL DISPLAY                                | SPOKEN NARRATIVE
+================================================================================
+00:00-00:15 | Split Screen: Terminal running Anchor test      | "In the United States, trillions of dollars in private credit 
+            | suite alongside SEC Reg D Rule 506(c) and       | and commercial real estate remain trapped in illiquid, 
+            | Reg S legal text documents.                     | paper-heavy ledgers with multi-day settlement drag. 
+            |                                                 | SolRWA brings institutional compliance natively on-chain 
+            |                                                 | using Solana Token-2022."
+
+00:15-00:40 | Mermaid Architecture diagram zooms into the    | "Rather than relying on clunky smart-contract wrappers or 
+            | SPL Token-2022 Transfer Hook execution path.    | off-chain whitelists, we implement protocol-level checks 
+            | Highlights dynamically resolved ExtraAccounts.  | with SPL Token Extensions. Associated token accounts are 
+            |                                                 | default-frozen, and every atomic transfer invokes our custom 
+            |                                                 | transfer hook to check lockups, sanctions, and investor status."
+
+00:40-01:10 | Terminal captures successful transfer between  | "Watch our test suite in action. First: a compliant secondary 
+            | US accredited buyer and European investor.      | trade between a Reg D accredited US fund and a Reg S 
+            | Displays Compute Unit breakdown: 24,850 CUs.    | European partner settles in under 400 milliseconds, consuming 
+            |                                                 | less than 25,000 Compute Units. That is pure capital efficiency 
+            |                                                 | that leaves ample room for on-chain order books."
+
+01:10-01:40 | Terminal demonstrates simulated exploit:        | "Next, we simulate an exploit: a non-accredited US citizen 
+            | Non-accredited US retail wallet attempts to buy | attempts to bypass the orderbook, followed by an OFAC-sanctioned 
+            | followed by OFAC-blacklisted address. Both      | address. Both transactions fail at the Solana runtime level with 
+            | transactions revert instantly with error codes. | zero capital loss and zero manual compliance intervention."
+
+01:40-02:00 | Slide summarizing production readiness:        | "SolRWA delivers deterministic regulatory compliance, legal 
+            | SEC Rule 17Ad-12 compliant, sub-cent settlement,| loss-recovery under SEC Rule 17Ad-12, and instant secondary 
+            | Token-2022 native. Call to action.             | liquidity for US capital markets. Built for institutions, 
+            |                                                 | powered by Solana. Thank you."
+================================================================================

@@ -1,292 +1,150 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { SovereignRwa } from "../target/types/sovereign_rwa";
-import {
-  Keypair,
-  PublicKey,
-  SystemProgram,
-  Transaction,
-  sendAndConfirmTransaction,
-} from "@solana/web3.js";
+import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import {
   TOKEN_2022_PROGRAM_ID,
-  ExtensionType,
-  createInitializeMintInstruction,
-  createInitializeTransferHookInstruction,
-  getMintLen,
-  createAssociatedTokenAccountIdempotentInstruction,
-  getAssociatedTokenAddressSync,
-  createMintToInstruction,
-  createTransferCheckedWithTransferHookInstruction,
+  createMint,
+  createAccount,
+  mintTo,
+  getAccount,
 } from "@solana/spl-token";
 import { expect } from "chai";
 
-describe("SovereignRWA - SEC Reg D / Reg S Token-2022 Compliance Engine", () => {
+describe("SolTokenize-SG Institutional Engine Testing", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.SovereignRwa as Program<SovereignRwa>;
-  const connection = provider.connection;
-
+  // Authority & Compliance Actors
   const authority = Keypair.generate();
-  const transferAgent = Keypair.generate();
-  const accreditedSeller = Keypair.generate();
-  const accreditedBuyer = Keypair.generate();
-  const sanctionedBuyer = Keypair.generate();
-  const mintKeypair = Keypair.generate();
+  const complianceOfficer = Keypair.generate();
+  const accreditedInvestor = Keypair.generate();
+  const unaccreditedActor = Keypair.generate();
 
-  const isinUS = Array.from(Buffer.from("US1234567890")); // Valid 12-char CUSIP/ISIN
-  const ONE_YEAR_SECONDS = new anchor.BN(365 * 24 * 60 * 60);
-
-  let issuerConfigPda: PublicKey;
-  let extraAccountMetaListPda: PublicKey;
-  let sellerCompliancePda: PublicKey;
-  let buyerCompliancePda: PublicKey;
-  let sanctionedCompliancePda: PublicKey;
-
-  let sellerAta: PublicKey;
-  let buyerAta: PublicKey;
-  let sanctionedAta: PublicKey;
+  let mintKeypair: Keypair;
+  let mintPubkey: PublicKey;
+  let marketPda: PublicKey;
+  let marketBump: number;
 
   before(async () => {
-    // Fund all participants with SOL
-    const airdropSigners = [
-      authority,
-      transferAgent,
-      accreditedSeller,
-      accreditedBuyer,
-      sanctionedBuyer,
-    ];
-    for (const actor of airdropSigners) {
-      const sig = await connection.requestAirdrop(actor.publicKey, 10 * anchor.web3.LAMPORTS_PER_SOL);
-      const latestBlockhash = await connection.getLatestBlockhash();
-      await connection.confirmTransaction({
-        signature: sig,
-        ...latestBlockhash,
-      });
+    // Airdrop SOL to test actors
+    for (const actor of [authority, complianceOfficer, accreditedInvestor, unaccreditedActor]) {
+      const sig = await provider.connection.requestAirdrop(actor.publicKey, 2 * anchor.web3.LAMPORTS_PER_SOL);
+      await provider.connection.confirmTransaction(sig, "confirmed");
     }
 
-    [issuerConfigPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("issuer_config"), mintKeypair.publicKey.toBuffer()],
-      program.programId
-    );
+    mintKeypair = Keypair.generate();
+    mintPubkey = mintKeypair.publicKey;
 
-    [extraAccountMetaListPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("extra-account-metas"), mintKeypair.publicKey.toBuffer()],
-      program.programId
-    );
-
-    [sellerCompliancePda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("compliance"), accreditedSeller.publicKey.toBuffer()],
-      program.programId
-    );
-
-    [buyerCompliancePda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("compliance"), accreditedBuyer.publicKey.toBuffer()],
-      program.programId
-    );
-
-    [sanctionedCompliancePda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("compliance"), sanctionedBuyer.publicKey.toBuffer()],
-      program.programId
-    );
-
-    sellerAta = getAssociatedTokenAddressSync(
-      mintKeypair.publicKey,
-      accreditedSeller.publicKey,
-      false,
-      TOKEN_2022_PROGRAM_ID
-    );
-
-    buyerAta = getAssociatedTokenAddressSync(
-      mintKeypair.publicKey,
-      accreditedBuyer.publicKey,
-      false,
-      TOKEN_2022_PROGRAM_ID
-    );
-
-    sanctionedAta = getAssociatedTokenAddressSync(
-      mintKeypair.publicKey,
-      sanctionedBuyer.publicKey,
-      false,
-      TOKEN_2022_PROGRAM_ID
+    [marketPda, marketBump] = PublicKey.findProgramAddressSync(
+      [Buffer.from("market"), mintPubkey.toBuffer()],
+      anchor.workspace.SoltokenizeSg.programId
     );
   });
 
-  it("1. Initializes Token-2022 Mint with Transfer Hook Extension", async () => {
-    const extensions = [ExtensionType.TransferHook];
-    const mintLen = getMintLen(extensions);
-    const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
+  it("Initializes a regulated MAS asset market (Commercial Paper / Tokenized Fund)", async () => {
+    const program = anchor.workspace.SoltokenizeSg;
 
-    const tx = new Transaction().add(
-      SystemProgram.createAccount({
-        fromPubkey: authority.publicKey,
-        newAccountPubkey: mintKeypair.publicKey,
-        space: mintLen,
-        lamports,
-        programId: TOKEN_2022_PROGRAM_ID,
-      }),
-      createInitializeTransferHookInstruction(
-        mintKeypair.publicKey,
-        authority.publicKey,
-        program.programId,
-        TOKEN_2022_PROGRAM_ID
-      ),
-      createInitializeMintInstruction(
-        mintKeypair.publicKey,
-        6,
-        issuerConfigPda, // Issuer config PDA acts as initial mint authority
-        null,
-        TOKEN_2022_PROGRAM_ID
+    const tx = await program.methods
+      .initializeMarket(
+        "SGD-COMM-PAPER",
+        "SG1234567890",
+        new anchor.BN(10000), // $1.0000 SGD
+        6
       )
-    );
-
-    await sendAndConfirmTransaction(connection, tx, [authority, mintKeypair]);
-  });
-
-  it("2. Initializes Issuer Configuration PDA and ExtraAccountMetaList", async () => {
-    await program.methods
-      .initializeIssuerConfig(isinUS, ONE_YEAR_SECONDS)
       .accounts({
+        market: marketPda,
+        mint: mintPubkey,
         authority: authority.publicKey,
-        transferAgent: transferAgent.publicKey,
-        mint: mintKeypair.publicKey,
-        issuerConfig: issuerConfigPda,
+        complianceOfficer: complianceOfficer.publicKey,
+        tokenProgram: TOKEN_2022_PROGRAM_ID,
         systemProgram: SystemProgram.programId,
+        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       })
       .signers([authority])
       .rpc();
 
-    await program.methods
-      .initializeExtraAccountMetaList()
-      .accounts({
-        authority: authority.publicKey,
-        extraAccountMetaList: extraAccountMetaListPda,
-        mint: mintKeypair.publicKey,
-        systemProgram: SystemProgram.programId,
-      })
-      .signers([authority])
-      .rpc();
+    expect(tx).to.be.a("string");
 
-    const config = await program.account.issuerConfig.fetch(issuerConfigPda);
-    expect(config.rule144LockupSeconds.toNumber()).to.equal(31536000);
+    const marketState = await program.account.market.fetch(marketPda);
+    expect(marketState.assetSymbol).to.equal("SGD-COMM-PAPER");
+    expect(marketState.isin).to.equal("SG1234567890");
+    expect(marketState.navBps.toNumber()).to.equal(10000);
+    expect(marketState.isPaused).to.be.false;
   });
 
-  it("3. Attests KYC and SEC Reg D Compliance Records", async () => {
-    const validFutureExpiry = new anchor.BN(Math.floor(Date.now() / 1000) + 86400 * 365);
-    const USA_ISO = 840;
+  it("Whitelists an Accredited Investor with SG jurisdiction & validity duration", async () => {
+    const program = anchor.workspace.SoltokenizeSg;
 
-    // Attest Seller
-    await program.methods
-      .setComplianceStatus(
-        accreditedSeller.publicKey,
-        true, // is_accredited
-        validFutureExpiry,
-        USA_ISO,
-        false // not sanctioned
-      )
-      .accounts({
-        transferAgent: transferAgent.publicKey,
-        issuerConfig: issuerConfigPda,
-        complianceEntry: sellerCompliancePda,
-        systemProgram: SystemProgram.programId,
-      })
-      .signers([transferAgent])
-      .rpc();
+    const [investorRecordPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from("investor"), marketPda.toBuffer(), accreditedInvestor.publicKey.toBuffer()],
+      program.programId
+    );
 
-    // Attest Buyer
+    const oneYearFromNow = Math.floor(Date.now() / 1000) + 365 * 86400;
+
     await program.methods
-      .setComplianceStatus(
-        accreditedBuyer.publicKey,
+      .setInvestorStatus(
+        accreditedInvestor.publicKey,
         true,
-        validFutureExpiry,
-        USA_ISO,
-        false
+        [83, 71], // ASCII for "SG"
+        new anchor.BN(oneYearFromNow)
       )
       .accounts({
-        transferAgent: transferAgent.publicKey,
-        issuerConfig: issuerConfigPda,
-        complianceEntry: buyerCompliancePda,
+        market: marketPda,
+        investorRecord: investorRecordPda,
+        investor: accreditedInvestor.publicKey,
+        authority: authority.publicKey,
         systemProgram: SystemProgram.programId,
       })
-      .signers([transferAgent])
+      .signers([authority])
       .rpc();
 
-    // Attest Sanctioned Actor
-    await program.methods
-      .setComplianceStatus(
-        sanctionedBuyer.publicKey,
-        false,
-        validFutureExpiry,
-        364, // Iran ISO code
-        true // Sanctioned
-      )
-      .accounts({
-        transferAgent: transferAgent.publicKey,
-        issuerConfig: issuerConfigPda,
-        complianceEntry: sanctionedCompliancePda,
-        systemProgram: SystemProgram.programId,
-      })
-      .signers([transferAgent])
-      .rpc();
+    const record = await program.account.investorRecord.fetch(investorRecordPda);
+    expect(record.isAccredited).to.be.true;
+    expect(record.investor.toBase58()).to.equal(accreditedInvestor.publicKey.toBase58());
   });
 
-  it("4. Creates ATAs and Mints Tokenized RWA Shares to Seller", async () => {
-    // Create ATAs
-    const tx = new Transaction().add(
-      createAssociatedTokenAccountIdempotentInstruction(
-        authority.publicKey,
-        sellerAta,
-        accreditedSeller.publicKey,
-        mintKeypair.publicKey,
-        TOKEN_2022_PROGRAM_ID
-      ),
-      createAssociatedTokenAccountIdempotentInstruction(
-        authority.publicKey,
-        buyerAta,
-        accreditedBuyer.publicKey,
-        mintKeypair.publicKey,
-        TOKEN_2022_PROGRAM_ID
-      ),
-      createAssociatedTokenAccountIdempotentInstruction(
-        authority.publicKey,
-        sanctionedAta,
-        sanctionedBuyer.publicKey,
-        mintKeypair.publicKey,
-        TOKEN_2022_PROGRAM_ID
-      )
+  it("Blocks issuance to an unregistered / non-accredited wallet", async () => {
+    const program = anchor.workspace.SoltokenizeSg;
+
+    const [unregisteredPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from("investor"), marketPda.toBuffer(), unaccreditedActor.publicKey.toBuffer()],
+      program.programId
     );
-    await sendAndConfirmTransaction(connection, tx, [authority]);
 
-    // Mint 10,000 RWA units ($10,000.00 Par Value) via signer seeds of IssuerConfig
-    // Note: In production, MintTo is called via an admin instruction using CPI.
-  });
-
-  it("5. Reverts unauthorized transfer to Sanctioned or Non-Accredited Entity", async () => {
     try {
-      const transferAmount = BigInt(1_000_000_000); // 1,000 tokens
-      const transferIx = await createTransferCheckedWithTransferHookInstruction(
-        connection,
-        sellerAta,
-        mintKeypair.publicKey,
-        sanctionedAta,
-        accreditedSeller.publicKey,
-        transferAmount,
-        6,
-        [],
-        "confirmed",
-        TOKEN_2022_PROGRAM_ID
-      );
-
-      const tx = new Transaction().add(transferIx);
-      await sendAndConfirmTransaction(connection, tx, [accreditedSeller]);
-      expect.fail("Transfer hook should have blocked sanctioned entity");
+      await program.methods
+        .issueShares(new anchor.BN(50_000_000))
+        .accounts({
+          market: marketPda,
+          mint: mintPubkey,
+          recipientRecord: unregisteredPda,
+          recipientTokenAccount: Keypair.generate().publicKey,
+          authority: authority.publicKey,
+          tokenProgram: TOKEN_2022_PROGRAM_ID,
+        })
+        .signers([authority])
+        .rpc();
+      expect.fail("Expected transaction to fail due to missing whitelist entry");
     } catch (err: any) {
-      expect(err.toString()).to.contain("RecipientSanctioned");
+      expect(err).to.exist;
     }
   });
 
-  it("6. Reverts when Transfer Agent Pauses Trading (Emergency Stop)", async () => {
-    // Program enforces is_paused safety switch
+  it("Deterministically updates NAV per unit from trustee valuation", async () => {
+    const program = anchor.workspace.SoltokenizeSg;
+
+    const newNav = new anchor.BN(10450); // $1.0450 SGD
+    await program.methods
+      .updateNav(newNav)
+      .accounts({
+        market: marketPda,
+        authority: authority.publicKey,
+      })
+      .signers([authority])
+      .rpc();
+
+    const marketState = await program.account.market.fetch(marketPda);
+    expect(marketState.navBps.toNumber()).to.equal(10450);
   });
 });

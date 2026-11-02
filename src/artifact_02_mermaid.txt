@@ -1,67 +1,41 @@
 flowchart TD
-    %% Styling
-    classDef actor fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
-    classDef pda fill:#0f172a,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
-    classDef program fill:#1e1b4b,stroke:#6366f1,stroke-width:2px,color:#f8fafc;
-    classDef check fill:#3b0764,stroke:#ec4899,stroke-width:2px,color:#f8fafc;
-    classDef token fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#f8fafc;
-
-    subgraph Actors ["Authorized Institutional Actors"]
-        Issuer["Asset Issuer / General Partner (GP)"]:::actor
-        TransferAgent["Licensed Transfer Agent (KYC/AML Oracle)"]:::actor
-        InvestorA["Investor A (US Accredited - Seller)"]:::actor
-        InvestorB["Investor B (US Accredited - Buyer)"]:::actor
-        SanctionedParty["Sanctioned / Non-Accredited Actor"]:::actor
+    subgraph Identity_and_Accreditation ["1. Identity & Compliance Verification (Off-Chain)"]
+        Issuer[Asset Sponsor / Issuer]
+        Investor[Institutional / Accredited Investor]
+        KycProvider[Identity Provider / Verifier]
+        Investor -->|1. Submit KYC/W-8BEN/Accreditation Docs| KycProvider
+        KycProvider -->|2. Verify SEC Reg D 506(c) Criteria| KycProvider
+        KycProvider -->|3. Issue Ed25519 Signed Attestation Claim| Issuer
     end
 
-    subgraph ProgramAccounts ["SovereignRWA Core Architecture"]
-        RwaMint["RWA Mint (Token-2022)\nExtension: TransferHook\nExtension: DefaultAccountState(Frozen)"]:::token
+    subgraph Solana_Runtime ["2. Solana High-Throughput Settlement Layer (On-Chain)"]
+        AdminCLI[Enterprise Issuer Admin CLI]
+        CompliancePDA[Compliance Registry PDA\n- Status: Active\n- Country Code: 840 (US)\n- Class: Accredited Institutional\n- Rule 144 Release: T + 365 Days]
+        TransferHook[Token-2022 Transfer Hook Engine\n- Check Sender KYC Validity\n- Check Receiver KYC Validity\n- Assert Rule 144 Lockup Elapsed\n- Check Transfer Limits]
+        TokenMint[Token-2022 RWA Mint\n- Transfer Hook Extension Configured\n- Metadata Extension Initialized]
+        SenderATA[Sender Token Account]
+        RecipientATA[Recipient Token Account]
+
+        Issuer -->|4. Push Signed Identity Claims| AdminCLI
+        AdminCLI -->|5. anchor: set_investor_certificate| CompliancePDA
+        AdminCLI -->|6. anchor: initialize_mint_and_hook| TokenMint
         
-        IssuerConfig["PDA: Issuer Configuration\n['issuer_config', Mint]\nAdmin, TransferAgentKey, AssetISIN"]:::pda
-        
-        ComplianceA["PDA: Investor Identity A\n['compliance', InvestorA]\nStatus: Verified | RegD: True\nExpiry: Valid | Country: 840 (USA)"]:::pda
-        ComplianceB["PDA: Investor Identity B\n['compliance', InvestorB]\nStatus: Verified | RegD: True\nExpiry: Valid | Country: 840 (USA)"]:::pda
-        ComplianceBad["PDA: Investor Identity Malicious\n['compliance', SanctionedParty]\nStatus: Revoked / Expired"]:::pda
-        
-        ExtraAccountList["PDA: ExtraAccountMetaList\n['extra-account-metas', Mint]\nSpecifies compliance PDAs required for CPI"]:::pda
+        SenderATA -->|7. Initiate Secondary Transfer (spl-token transfer-checked)| TokenMint
+        TokenMint -->|8. Automatic CPI to Transfer Hook Program| TransferHook
+        TransferHook -->|9. Read & Validate Slices| CompliancePDA
+        CompliancePDA -->|10. Assert PASS: Both Whitelisted & Unlocked| TransferHook
+        TransferHook -->|11. Complete State Mutation & Emit Audit Event| RecipientATA
     end
 
-    subgraph ExecutionLayer ["Solana Runtime & Anchor Verification"]
-        SPL2022["SPL Token-2022 Program"]:::program
-        HookProgram["SovereignRWA Hook Program\n(Anchor CPI Target)"]:::program
-        
-        subgraph HookChecks ["Hook Evaluation Matrix"]
-            Check1{"1. Is Mint Frozen?"}:::check
-            Check2{"2. Sender KYC Valid & Non-Expired?"}:::check
-            Check3{"3. Recipient KYC Valid & Non-Expired?"}:::check
-            Check4{"4. Country Jurisdictions Allowed?\n(Non-OFAC)"}:::check
-            Check5{"5. Rule 144 Lockup Satisfied?"}:::check
-        end
+    subgraph Enterprise_Audit_and_Dispatch ["3. Enterprise Telemetry & Investor Comms"]
+        EventWorker[Solana Geyser / RPC WebSocket Listener]
+        ResendGateway[Resend Enterprise Email API]
+        AuditLog[(PostgreSQL Enterprise Audit Lake)]
+        SlackAlert[SOC2 / Compliance Webhook Dispatcher]
+
+        RecipientATA -.->|12. Transfer Audit Event Emitted| EventWorker
+        EventWorker -->|13. Persist Event State| AuditLog
+        EventWorker -->|14. Trigger Cryptographic Settlement Receipt| ResendGateway
+        EventWorker -->|15. Compliance Violation / Whale Alert| SlackAlert
+        ResendGateway -->|16. Form 1066 / SEC Transfer Confirmation| Investor
     end
-
-    %% Flow Initiation
-    InvestorA -->|"1. Initiates transfer_checked(amount)"| SPL2022
-    SPL2022 -->|"2. Fetches Hook Configuration"| ExtraAccountList
-    SPL2022 -->|"3. Executes CPI: execute(source, mint, dest, owner)"| HookProgram
-
-    %% Verification Pipeline
-    HookProgram --> Check1
-    Check1 -->|Pass| Check2
-    Check1 -->|Fail| Revert1["Revert: MintIsFrozen"]
-    
-    Check2 -->|Pass| Check3
-    Check2 -->|Fail / Expired| Revert2["Revert: SenderComplianceInvalid"]
-    
-    Check3 -->|Pass| Check4
-    Check3 -->|Fail / Expired| Revert3["Revert: RecipientComplianceInvalid"]
-    
-    Check4 -->|Pass| Check5
-    Check4 -->|Fail (Sanctioned)| Revert4["Revert: JurisdictionBlocked"]
-    
-    Check5 -->|Pass| SettleTransfer["4. State Update: Atomic Settlement Complete"]
-    Check5 -->|Fail (Under Lockup)| Revert5["Revert: Rule144LockupActive"]
-
-    %% Admin & Oracle Feeds
-    TransferAgent -->|"set_investor_compliance(Investor, Expiry, RegD, ISO)"| ComplianceA
-    TransferAgent -->|"set_investor_compliance(Investor, Expiry, RegD, ISO)"| ComplianceB
-    Issuer -->|"force_transfer_garnishment(source, dest, legal_cert)"| SPL2022

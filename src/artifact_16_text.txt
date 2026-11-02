@@ -1,0 +1,6 @@
+3/4 Traditional private markets settle in T+2 with massive paper friction. 
+
+With Solana's sub-second finality and cryptographic transfer hooks, compliance is checked deterministically on-chain before settlement.
+
+Full Anchor smart contract + Slack/Resend enterprise worker:
+github.com/developer/solana-us-market-tokenization

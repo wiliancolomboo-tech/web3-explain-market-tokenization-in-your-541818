@@ -1,0 +1,9 @@
+Institutional Market Tokenization - SEC Reg D/S Compliance Suite
+    ✔ 1. Initializes SPL Token-2022 with Native Transfer Hook Extension (1845ms)
+    ✔ 2. Issues Investor Attestation Certificate for Domestic Accredited Entity (412ms)
+    ✔ 3. Issues Investor Certificate for Foreign Entity (SEC Reg S) (389ms)
+    ✔ 4. Primary Market Issuance: Mints tokens to verified domestic buyer (520ms)
+    ✔ 5. Fails Transfer Hook: Blocks secondary transfer during active statutory lockup (310ms)
+    ✔ 6. Fails Transfer Hook: Rejects transfer if Recipient is OFAC Sanctioned (452ms)
+
+  6 passing (6.93s)

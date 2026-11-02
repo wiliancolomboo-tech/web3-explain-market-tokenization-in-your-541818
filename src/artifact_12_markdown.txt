@@ -1,0 +1,24 @@
+1/4 🇺🇸 How does Wall Street tokenize $27T in US Treasuries and Private Credit on @Solana? 
+
+Traditional finance suffers from T+1 latency, manual cap tables, and siloed KYC.
+
+We built an institutional compliance engine on Token Extensions (Token-2022) to enforce SEC rules at the speed of light. 🧵👇
+
+2/4 ⚡ Solana Token Extensions change everything. 
+
+Using Transfer Hooks (`spl-transfer-hook-interface`), our engine deterministically verifies:
+✅ Real-time OFAC sanctions screening
+✅ SEC Reg D 506(c) accredited investor validation
+✅ Reg S 12-month cross-border lockups
+✅ Rule 144 holding periods
+
+No off-chain gatekeepers. Zero settlement counterparty risk. Sub-second finality (~400ms) for <$0.001. 🛡️
+
+3/4 🏢 Complete enterprise-ready stack:
+🔹 Turnkey Anchor smart contract with SEC clawback delegate
+🔹 Telemetry daemon with real-time @Resend & Slack alerts
+🔹 100% automated test suite & Docker one-click deploy
+
+The future of U.S. capital markets runs on @Solana. 
+
+Check out the full open-source architecture here: github.com/solana-rwa-us-compliance-engine 🚀 #Solana #RWA #DeFi

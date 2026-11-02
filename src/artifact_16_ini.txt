@@ -1,0 +1,6 @@
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=EWPG111111111111111111111111111111111111111
+REGISTRAR_SECRET_KEY=[12,34,56, ... 64_bytes_json_array]
+RESEND_API_KEY=re_enterprise_live_key
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+PORT=8080

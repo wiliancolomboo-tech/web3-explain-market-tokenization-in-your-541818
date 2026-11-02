@@ -1,0 +1,7 @@
+How does it work?
+1/ Legal prospectus hash stored directly on-chain (§ 4 eWpG)
+2/ Identity & sanctions whitelisting checked programmatically at instruction execution
+3/ Atomic DvP against Circle $EURC
+4/ Programmable judicial clawback (§ 11 eWpG) for court orders
+
+No CSD fees. No T+2 delay.

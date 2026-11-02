@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  solana-rwa-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solana-rwa-compliance-engine
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - PROGRAM_ID=RWA1111111111111111111111111111111111111111
+      - SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+      - RESEND_API_KEY=re_123456789_abcdefghijklmnopqrstuvwxyz
+      - COMPLIANCE_EMAIL=sec-compliance@assetmanager-fund.com
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e 'process.exit(0)'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

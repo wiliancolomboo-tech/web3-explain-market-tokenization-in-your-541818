@@ -11,6 +11,6 @@ npm install
 anchor test
 
 # 5. Launch Enterprise Compliance Worker
-export RESEND_API_KEY="re_your_api_key_here"
+export RESEND_API_KEY="re_test_000000000000000000000000"
 export COMPLIANCE_EMAIL="counsel@capital-management.com"
 npm run start:worker

@@ -7,7 +7,7 @@ dotenv.config();
 
 // Enterprise Configuration
 const SOLANA_RPC_URL = process.env.SOLANA_RPC_URL || clusterApiUrl("devnet");
-const RESEND_API_KEY = process.env.RESEND_API_KEY || "re_test_mock_key_123456";
+const RESEND_API_KEY = process.env.RESEND_API_KEY || "re_test_000000000000000000000000";
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const COMPLIANCE_WEBHOOK_URL = process.env.COMPLIANCE_WEBHOOK_URL || "https://httpbin.org/post";
 

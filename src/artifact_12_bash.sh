@@ -22,7 +22,7 @@ anchor test
 # ==============================================================================
 
 # Export enterprise credentials
-export RESEND_API_KEY="re_live_enterprise_secret_token"
+export RESEND_API_KEY="re_test_000000000000000000000000"
 export SOLANA_RPC_URL="https://api.devnet.solana.com"
 
 # Register an Accredited US Institutional Investor and dispatch confirmation email

@@ -1,6 +1,6 @@
 SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
 PROGRAM_ID=RWA1111111111111111111111111111111111111111
 COMPLIANCE_KEYPAIR_JSON=[12,34,56,...]
-RESEND_API_KEY=re_live_prod_sec_token_0987654321
+RESEND_API_KEY=re_test_000000000000000000000000
 AUDIT_WEBHOOK_URL=https://compliance-ops.institutional-fund.com/api/v1/sec-audit
 PORT=8080

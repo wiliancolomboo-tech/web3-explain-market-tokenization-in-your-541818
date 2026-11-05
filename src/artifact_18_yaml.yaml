@@ -11,7 +11,7 @@ services:
       - NODE_ENV=production
       - SOLANA_RPC_URL=https://api.devnet.solana.com
       - COMPLIANCE_SIGNER_KEYPAIR_JSON=[1,2,3...255]
-      - RESEND_API_KEY=re_live_your_resend_api_key_here
+      - RESEND_API_KEY=re_test_000000000000000000000000
       - RESEND_FROM_EMAIL=compliance@solrwa-institutional.com
       - SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
       - PORT=8080

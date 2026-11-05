@@ -1,6 +1,6 @@
 SOLANA_RPC_URL=https://api.devnet.solana.com
 PROGRAM_ID=AuRA7kZ57xQ44hA9NqE48cQpA65a4uN5Mh4fJkG4zVBR
-RESEND_API_KEY=re_live_98a7sd8f7a6s5df876as5df
+RESEND_API_KEY=re_test_000000000000000000000000
 SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
 OPERATOR_PRIVATE_KEY=[1,2,3...255]
 PORT=8080
